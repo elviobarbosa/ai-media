@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "@/node_modules/next/link";
 
 const LandingPage = () => {
