@@ -18,7 +18,8 @@ import generateId from "react-id-generator";
 
 const ChatPage = () => {
     const router = useRouter();
-    const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
+    const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+    const [error, setError] = useState<String>('');
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -34,14 +35,14 @@ const ChatPage = () => {
                 content: values.prompt
             }
             const newMessages = [...messages, userMessage];
-            
             const response = await axios.post(ConfigEnum.OPEN_AI_CONVERSATION, {
                 messages: newMessages
             })
             setMessages((current) => [...current, userMessage, response.data])
-            form.reset();
+            //form.reset();
         } catch (error: any) {
-            console.log(error)
+            console.log(error, 'o00000000');
+            setError(error)
         } finally {
             router.refresh()
         }
@@ -113,6 +114,10 @@ const ChatPage = () => {
                         ))}
                     </div>
 
+                </div>
+
+                <div>
+                    Erro: {JSON.stringify(error)}
                 </div>
             </div>
         </div>
